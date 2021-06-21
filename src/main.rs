@@ -13,7 +13,7 @@ fn panic(_info: &PanicInfo) -> ! {
 pub extern "C" fn _start() -> ! {
     vga_buffer::print_something();
 
-    loop{}
+    loop {}
 }
 
 mod vga_buffer;
