@@ -48,11 +48,11 @@ struct Buffer {
 pub struct Writer {
   column_position: usize,
   color_code: ColorCode,
-  buffer: &'static Buffer,
+  buffer: &'static mut Buffer,
 }
 
 impl Writer {
-  pub fn write_byte(&mut self, byte: usize) {
+  pub fn write_byte(&mut self, byte: u8) {
     match byte {
       b'\n' => self.new_line(),
       byte => {
@@ -67,7 +67,7 @@ impl Writer {
         self.buffer.chars[row][col] = ScreenChar {
           ascii_char: byte,
           color_code,
-        }
+        };
         self.column_position += 1;
       }
     }
