@@ -8,6 +8,7 @@ use core::panic::PanicInfo;
 
 const IO_BASE: u16 = 0xf4;
 
+#[cfg(not(test))]
 #[panic_handler]
 /// This function is called on panic.
 fn panic(_info: &PanicInfo) -> ! {
@@ -37,10 +38,20 @@ fn test_runner(tests: &[&dyn Fn()]) {
     exit_qemu(QemuExitCode::Success);
 }
 
+#[panic_handler]
+#[cfg(test)]
+fn panic(info: &PanicInfo) -> ! {
+    serial_println!("[failed]");
+    serial_println!();
+    serial_println!("Error: {}\n", info);
+    exit_qemu(QemuExitCode::Failed);
+    loop {}
+}
+
 #[test_case]
 fn trivial_test() {
     serial_print!("trivial_test...");
-    assert_eq!(1, 1);
+    assert_eq!(9, 1);
     serial_println!("[ok]")
 }
 
