@@ -25,11 +25,12 @@ pub extern "C" fn _start() -> ! {
     loop {}
 }
 
+mod serial;
 mod vga_buffer;
 
 #[cfg(test)]
 fn test_runner(tests: &[&dyn Fn()]) {
-    println!("Running {} tests", tests.len());
+    serial_println!("Running {} tests", tests.len());
     for test in tests {
         test();
     }
@@ -38,9 +39,9 @@ fn test_runner(tests: &[&dyn Fn()]) {
 
 #[test_case]
 fn trivial_test() {
-    print!("trivial_test...");
+    serial_print!("trivial_test...");
     assert_eq!(1, 1);
-    println!("[ok]")
+    serial_println!("[ok]")
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
