@@ -1,5 +1,5 @@
 [package]
-name = "os-project"
+name = "os_project"
 version = "0.1.0"
 authors = ["rindy1123 <genryusinbaou@gmail.com>"]
 edition = "2018"
@@ -18,7 +18,7 @@ version = "1.0"
 features = ["spin_no_std"]
 
 [package.metadata.bootimage]
-test-args = ["-device", "isa-debug-exit,iobase=0xf4,iosize=0x04", "-serial", "stdio"]
+test-args = ["-device", "isa-debug-exit,iobase=0xf4,iosize=0x04", "-serial", "stdio", "-display", "none"]
 test-success-exit-code = 33
 
 # [profile.dev]

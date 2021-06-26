@@ -7,26 +7,19 @@
 use core::panic::PanicInfo;
 use os_project::println;
 
-#[cfg(not(test))]
-#[panic_handler]
-/// This function is called on panic.
-fn panic(info: &PanicInfo) -> ! {
-    println!("{}", info);
+#[no_mangle]
+pub extern "C" fn _start() -> ! {
+    test_main();
+
     loop {}
 }
 
-#[cfg(test)]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     os_project::test_panic_handler(info)
 }
 
-#[no_mangle]
-pub extern "C" fn _start() -> ! {
-    println!("Hello, World, {}", 12345);
-
-    #[cfg(test)]
-    test_main();
-
-    loop {}
+#[test_case]
+fn test_print() {
+    println!("Hello, {}", 123);
 }

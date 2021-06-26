@@ -30,7 +30,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "os-project"
+name = "os_project"
 version = "0.1.0"
 dependencies = [
  "bootloader",
