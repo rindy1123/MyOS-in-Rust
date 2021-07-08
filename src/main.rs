@@ -27,11 +27,6 @@ pub extern "C" fn _start() -> ! {
 
     os_project::init();
 
-    fn stack_overflow() {
-        stack_overflow();
-    }
-    stack_overflow();
-
     #[cfg(test)]
     test_main();
 
