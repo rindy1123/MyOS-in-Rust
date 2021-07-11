@@ -31,5 +31,10 @@ pub extern "C" fn _start() -> ! {
     test_main();
 
     println!("It did not crash!");
-    loop {}
+    loop {
+        use os_project::print;
+
+        for _ in 1..10000 {}
+        print!("-");
+    }
 }
