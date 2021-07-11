@@ -12,7 +12,7 @@ use os_project::println;
 /// This function is called on panic.
 fn panic(info: &PanicInfo) -> ! {
     println!("{}", info);
-    loop {}
+    os_project::hlt_loop();
 }
 
 #[cfg(test)]
@@ -31,10 +31,5 @@ pub extern "C" fn _start() -> ! {
     test_main();
 
     println!("It did not crash!");
-    loop {
-        use os_project::print;
-
-        for _ in 1..10000 {}
-        print!("-");
-    }
+    os_project::hlt_loop();
 }
