@@ -24,7 +24,7 @@ fn panic(info: &PanicInfo) -> ! {
 }
 
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
-    use os_project::memory::active_level_4_table;
+    use os_project::memory::translate_addr;
     use x86_64::VirtAddr;
 
     println!("Hello, World");
@@ -32,12 +32,17 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
     os_project::init();
 
     let phys_mem_offset = VirtAddr::new(boot_info.physical_memory_offset);
-    let l4_table = unsafe { active_level_4_table(phys_mem_offset) };
+    let addresses = [
+        0xb8000,
+        0x201008,
+        0x0100_0020_1a10,
+        boot_info.physical_memory_offset,
+    ];
 
-    for (i, entry) in l4_table.iter().enumerate() {
-        if !entry.is_unused() {
-            println!("L4 Entry {}: {:?}", i, entry);
-        }
+    for &address in &addresses {
+        let virt = VirtAddr::new(address);
+        let phys = unsafe { translate_addr(virt, phys_mem_offset) };
+        println!("{:?} -> {:?}", virt, phys);
     }
 
     #[cfg(test)]
