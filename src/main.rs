@@ -23,7 +23,7 @@ fn panic(info: &PanicInfo) -> ! {
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-    println!("Hello, World, {}", 12345);
+    println!("Hello, World");
 
     os_project::init();
 
